@@ -6,6 +6,11 @@ interface FindEnrollmentByCourseAndStudentIdParams {
   studentId: string;
 }
 
+interface CreateEnrollmentParams {
+  courseId: string;
+  studentId: string;
+}
+
 @Injectable()
 export class EnrollmentsService {
   constructor(private prisma: PrismaService) {}
@@ -42,6 +47,15 @@ export class EnrollmentsService {
         courseId,
         studentId,
         cancelledAt: null,
+      },
+    });
+  }
+
+  async createEnrollment({ studentId, courseId }: CreateEnrollmentParams) {
+    return this.prisma.enrollment.create({
+      data: {
+        courseId,
+        studentId,
       },
     });
   }
